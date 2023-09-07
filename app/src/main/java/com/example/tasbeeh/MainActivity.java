@@ -124,16 +124,30 @@ public class MainActivity extends AppCompatActivity {
             tasbeehItemList = new ArrayList<>();
         }
 
-        tasbeehItemList.add(tasbeehItem);
+        tasbeehItemList.add(0,tasbeehItem);
         currentCount = 0;
         updateCounterTextView();
 
+
+
         sharedPreferencesUtils.saveTasbeehItems(tasbeehItemList);
         sharedPreferencesUtils.setCurrentCount(currentCount);
+
     }
 
     private void navigateToSavedCountsActivity() {
         Intent intent = new Intent(MainActivity.this, SavedCountsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Reload the data from SharedPreferences
+        tasbeehItemList = sharedPreferencesUtils.getSavedTasbeehItems();
+        if (tasbeehItemList == null) {
+            tasbeehItemList = new ArrayList<>();
+        }
+        updateCounterTextView();
     }
 }
