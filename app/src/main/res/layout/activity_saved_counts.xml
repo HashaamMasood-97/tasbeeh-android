@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- RecyclerView to display saved Tasbeeh counts -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/savedCountsRecyclerView"
+    <!-- Use a FrameLayout as the root to avoid the AppBarLayout's default content inset -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/backButton"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent">
 
-    <!-- Back button to return to the previous activity -->
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Back" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <!-- RecyclerView to display saved Tasbeeh counts -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/savedCountsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:paddingTop="?attr/actionBarSize"
+            android:layout_marginBottom="16dp" />
+
+    </FrameLayout>
 
 </RelativeLayout>
-

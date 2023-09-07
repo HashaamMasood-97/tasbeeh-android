@@ -99,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!name.isEmpty()) {
                     saveTasbeeh(name);
                 }
+
+                navigateToSavedCountsActivity();
+
+                // Clear the state of the counter (optional)
+                resetCount();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
