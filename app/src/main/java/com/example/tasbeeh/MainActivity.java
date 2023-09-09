@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     private int currentCount = 0;
     private List<TasbeehItem> tasbeehItemList;
     private SharedPreferencesUtils sharedPreferencesUtils;
+    private Button saveButton;
+    private static final int REQUEST_CODE_UPDATE = 123;
+    private boolean isUpdateMode = false;
+    private int selectedItemPosition = -1; // Initialize as -1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         counterTextView = findViewById(R.id.counterTextView);
         Button incrementButton = findViewById(R.id.incrementButton);
         Button resetButton = findViewById(R.id.resetButton);
-        Button saveButton = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.saveButton);
         Button savedCountsButton = findViewById(R.id.savedDhikrButton);
 
         sharedPreferencesUtils = new SharedPreferencesUtils(getSharedPreferences("TasbeehAppPrefs", MODE_PRIVATE));
@@ -39,8 +42,29 @@ public class MainActivity extends AppCompatActivity {
             tasbeehItemList = new ArrayList<>();
         }
 
-        currentCount = sharedPreferencesUtils.getCurrentCount();
-        updateCounterTextView();
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("action") && intent.getStringExtra("action").equals("continue")) {
+            // Get the count from the intent
+            int selectedCount = intent.getIntExtra("count", 0);
+
+            // Get the selected item position from the intent
+            selectedItemPosition = intent.getIntExtra("position", -1);
+
+            // Update the counter with the selected count
+            currentCount = selectedCount;
+            updateCounterTextView();
+
+            // Change the "Save" button text to "Update"
+            saveButton.setText("Update");
+
+            // Set a flag to indicate "Update" mode
+            isUpdateMode = true;
+        }
+        else{
+            currentCount = sharedPreferencesUtils.getCurrentCount();
+            updateCounterTextView();
+        }
+
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +83,14 @@ public class MainActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSaveDialog();
+                if (isUpdateMode) {
+                    // Update the count and timestamp of the selected item
+                    updateSelectedItem();
+                } else {
+                    showSaveDialog();
+                }
             }
+
         });
 
         savedCountsButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void incrementCount() {
         currentCount++;
         updateCounterTextView();
@@ -79,11 +110,37 @@ public class MainActivity extends AppCompatActivity {
     private void resetCount() {
         currentCount = 0;
         updateCounterTextView();
+
+
+        // Reset the flag and selected item position
+        isUpdateMode = false;
+        selectedItemPosition = -1;
+
+        // Change the "Save" button text back to "Save"
+        saveButton.setText("Save");
     }
 
     private void updateCounterTextView() {
         counterTextView.setText(String.valueOf(currentCount));
     }
+
+    private void updateSelectedItem() {
+        if (selectedItemPosition >= 0 && selectedItemPosition < tasbeehItemList.size()) {
+            // Get the selected TasbeehItem
+            TasbeehItem selectedItem = tasbeehItemList.get(selectedItemPosition);
+
+            // Update the count and timestamp of the selected item
+            selectedItem.setCount(currentCount);
+            selectedItem.setTimestamp(System.currentTimeMillis());
+
+            // Save the updated list
+            sharedPreferencesUtils.saveTasbeehItems(tasbeehItemList);
+
+            // Optionally, update the counter display
+            updateCounterTextView();
+        }
+    }
+
 
     private void showSaveDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -128,17 +185,16 @@ public class MainActivity extends AppCompatActivity {
         currentCount = 0;
         updateCounterTextView();
 
-
-
         sharedPreferencesUtils.saveTasbeehItems(tasbeehItemList);
         sharedPreferencesUtils.setCurrentCount(currentCount);
-
     }
 
     private void navigateToSavedCountsActivity() {
         Intent intent = new Intent(MainActivity.this, SavedCountsActivity.class);
         startActivity(intent);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -150,4 +206,17 @@ public class MainActivity extends AppCompatActivity {
         }
         updateCounterTextView();
     }
+
+    // Inside SavedCountsActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK) {
+            // Update the "Save" button text to "Update"
+            saveButton.setText("Update");
+        }
+    }
+
+
 }

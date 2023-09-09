@@ -21,4 +21,12 @@ public class TasbeehItem {
     public long getTimestamp() {
         return timestamp;
     }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

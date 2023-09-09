@@ -1,6 +1,7 @@
 package com.example.tasbeeh;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -175,7 +176,8 @@ public class SavedCountsActivity extends AppCompatActivity {
                 .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing, just close the dialog
+                        // Inside the OnClickListener for the "Continue" button
+                        continueSelectedItem(position);
                     }
                 })
                 .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
@@ -229,6 +231,17 @@ public class SavedCountsActivity extends AppCompatActivity {
 
         }
     }
+    private void continueSelectedItem(final int position) {
+        int selectedCount = savedTasbeehItems.get(position).getCount();
+
+        // Create an intent to navigate to MainActivity and pass the count and selected item position
+        Intent intent = new Intent(SavedCountsActivity.this, MainActivity.class);
+        intent.putExtra("action", "continue");
+        intent.putExtra("count", selectedCount);
+        intent.putExtra("position", position); // Pass the selected item position
+        startActivity(intent);
+    }
+
 
 
 
