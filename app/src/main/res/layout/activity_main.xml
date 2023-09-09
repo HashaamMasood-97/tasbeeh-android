@@ -1,55 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
+
+    <!-- Heading -->
+    <TextView
+        android:id="@+id/headingTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Digital Tasbeeh"
+        android:textSize="34sp"
+        android:textStyle="bold|italic"
+        android:gravity="center"
+        android:paddingTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/counterTextView"
+        />
 
     <!-- Counter display TextView -->
     <TextView
         android:id="@+id/counterTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="0"
-        android:textSize="36sp"
+        android:textSize="48sp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headingTextView"
+        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
+        />
 
-    <!-- Increment button -->
-    <Button
-        android:id="@+id/incrementButton"
-        android:layout_width="match_parent"
+    <!-- Container for buttons -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Increment"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/counterTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5">
 
-    <!-- Reset button -->
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reset"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        <!-- Container for Increment and Reset buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-    <!-- Save button -->
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Tasbeeh"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+            <!-- Increment button (rounded) -->
+            <Button
+                android:id="@+id/incrementButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="+"
+                android:textSize="14sp"
+                android:background="@drawable/rounded_button"
+                />
 
-    <!-- View saved dhikr button -->
-    <Button
-        android:id="@+id/savedDhikrButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Saved Dhikr"
-        android:textSize="18sp"/>
+            <!-- Reset button (rounded) -->
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reset"
+                android:textSize="14sp"
+                android:background="@drawable/rounded_button"
+                android:layout_marginStart="16dp"
+                />
+        </LinearLayout>
 
-</LinearLayout>
+        <!-- Gap between buttons -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+        <!-- Container for Save and Save Tasbeeh buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Save button (left) -->
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textSize="14sp"
+                android:background="@drawable/rounded_button"
+                />
+
+            <!-- Save Tasbeeh button (right) -->
+            <Button
+                android:id="@+id/savedDhikrButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Saved Tasbeeh"
+                android:textSize="14sp"
+                android:background="@drawable/rounded_button"
+                android:layout_marginStart="16dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
