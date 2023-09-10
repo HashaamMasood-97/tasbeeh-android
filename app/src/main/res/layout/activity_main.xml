@@ -16,27 +16,75 @@
         android:textSize="34sp"
         android:textStyle="bold|italic"
         android:gravity="center"
-        android:paddingTop="30dp"
+        android:paddingTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/counterTextView"
+        app:layout_constraintBottom_toTopOf="@id/vectorImage"
+        />
+
+    <!-- ImageView for the vector image -->
+    <ImageView
+        android:id="@+id/vectorImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ac"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headingTextView"
+        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
+        app:layout_constraintDimensionRatio="1:1"
         />
 
     <!-- Counter display TextView -->
     <TextView
         android:id="@+id/counterTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="58sp"
+        android:textSize="50sp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headingTextView"
-        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/vectorImage"
+        app:layout_constraintStart_toStartOf="@id/vectorImage"
+        app:layout_constraintEnd_toEndOf="@id/vectorImage"
+        app:layout_constraintBottom_toBottomOf="@id/vectorImage"
+        app:layout_constraintVertical_bias="0.23"
+        app:layout_constraintHorizontal_bias="0.5"
+    />
+
+    <Button
+        android:id="@+id/silverButtonSmall"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="20sp"
+        android:background="@drawable/inc_round_button"
+        app:backgroundTint="@null"
+        android:text="+"
+        app:layout_constraintTop_toTopOf="@id/vectorImage"
+        app:layout_constraintStart_toStartOf="@id/vectorImage"
+        app:layout_constraintEnd_toEndOf="@id/vectorImage"
+        app:layout_constraintBottom_toBottomOf="@id/vectorImage"
+        app:layout_constraintVertical_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.72"
         />
+
+    <Button
+        android:id="@+id/silverButton"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        android:background="@drawable/inc_round_button"
+        app:backgroundTint="@null"
+        android:text="+"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="@id/vectorImage"
+        app:layout_constraintStart_toStartOf="@id/vectorImage"
+        app:layout_constraintEnd_toEndOf="@id/vectorImage"
+        app:layout_constraintBottom_toBottomOf="@id/vectorImage"
+        app:layout_constraintVertical_bias="0.73"
+        app:layout_constraintHorizontal_bias="0.5"
+    />
 
     <!-- Container for buttons -->
     <LinearLayout
@@ -47,7 +95,7 @@
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/counterTextView"
+        app:layout_constraintTop_toBottomOf="@id/vectorImage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.5">
 

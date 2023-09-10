@@ -1,0 +1,12 @@
+<!-- @drawable/inc_round_button.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <size
+        android:width="32dp"
+        android:height="32dp" />
+    <gradient
+        android:type="linear"
+        android:angle="135"
+        android:startColor="@color/silver"
+        android:endColor="@color/dark_green" />
+</shape>
