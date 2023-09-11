@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import java.util.Collections;
@@ -78,6 +79,11 @@ public class SavedCountsActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new SavedTasbeehAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+
+            }
+            @Override
+            public void onBarIconClick(int position) {
+                // Handle the bar icon click here, e.g., show a dialog or perform any desired action
                 showDeleteConfirmationDialog(position);
             }
         });
@@ -114,6 +120,7 @@ public class SavedCountsActivity extends AppCompatActivity {
 
         public interface OnItemClickListener {
             void onItemClick(int position);
+            void onBarIconClick(int position);
         }
 
         @NonNull
@@ -136,15 +143,15 @@ public class SavedCountsActivity extends AppCompatActivity {
                 holder.timestampTextView.setText(formattedDate);
             }
 
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void onClick(View v) {
                     if (onItemClickListener != null) {
                         onItemClickListener.onItemClick(position);
                     }
-                    return true;
                 }
             });
+
 
         }
 
@@ -157,15 +164,18 @@ public class SavedCountsActivity extends AppCompatActivity {
             public TextView nameTextView;
             public TextView countTextView;
             public TextView timestampTextView;
+            public ImageView barIconImageView;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 nameTextView = itemView.findViewById(R.id.savedNameTextView);
                 countTextView = itemView.findViewById(R.id.savedCountTextView);
                 timestampTextView = itemView.findViewById(R.id.savedTimestampTextView);
+                barIconImageView = itemView.findViewById(R.id.barIconImageView);
 
 
-                itemView.setOnClickListener(new View.OnClickListener() {
+
+                /*itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();
@@ -173,7 +183,18 @@ public class SavedCountsActivity extends AppCompatActivity {
                             onItemClickListener.onItemClick(position);
                         }
                     }
+                }); */
+
+                barIconImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
+                            onItemClickListener.onBarIconClick(position);
+                        }
+                    }
                 });
+
             }
         }
     }
