@@ -143,14 +143,16 @@ public class SavedCountsActivity extends AppCompatActivity {
                 holder.timestampTextView.setText(formattedDate);
             }
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.barIconImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(position);
+                        onItemClickListener.onBarIconClick(position);
                     }
                 }
             });
+
+
 
 
         }
