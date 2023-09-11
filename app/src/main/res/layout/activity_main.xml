@@ -12,7 +12,7 @@
         android:id="@+id/headingTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Digital Tasbeeh"
+        android:text="Digital Tasbeeh Counter"
         android:textSize="34sp"
         android:textStyle="bold|italic"
         android:gravity="center"
@@ -54,13 +54,11 @@
         app:layout_constraintHorizontal_bias="0.5"
     />
 
-    <Button
+    <ImageView
         android:id="@+id/resetButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/roundedbuttonsmall"
-        app:backgroundTint="@null"
-        android:text="+"
+        android:background="@drawable/reset_with_background"
         app:layout_constraintTop_toTopOf="@id/vectorImage"
         app:layout_constraintStart_toStartOf="@id/vectorImage"
         app:layout_constraintEnd_toEndOf="@id/vectorImage"
@@ -68,6 +66,20 @@
         app:layout_constraintVertical_bias="0.48"
         app:layout_constraintHorizontal_bias="0.71"
         />
+
+    <ImageView
+        android:id="@+id/vibrationButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/rounded_vector_with_gradient"
+        app:layout_constraintTop_toTopOf="@id/vectorImage"
+        app:layout_constraintStart_toEndOf="@id/resetButton"
+        app:layout_constraintEnd_toStartOf="@id/incrementButton"
+        app:layout_constraintBottom_toBottomOf="@id/vectorImage"
+        app:layout_constraintVertical_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.95"
+        />
+
 
     <Button
         android:id="@+id/incrementButton"

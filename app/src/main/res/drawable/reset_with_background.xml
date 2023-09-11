@@ -1,0 +1,32 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:width="10dp"
+                android:color="#000000"
+                />
+        </shape>
+    </item>
+
+    <!-- Background with gradient -->
+    <item android:right="9dp" android:left="9dp" android:top="9dp" android:bottom="9dp">
+        <shape
+            android:shape="oval">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="@color/silver"
+                android:endColor="@color/dark_green" />
+            <size
+                android:width="24dp"
+                android:height="24dp" /> <!-- Adjust the radius as needed -->
+        </shape>
+    </item>
+
+    <!-- Vector image on top of the background -->
+    <item
+        android:drawable="@drawable/baseline_refresh_24"
+        android:gravity="center" />
+</layer-list>

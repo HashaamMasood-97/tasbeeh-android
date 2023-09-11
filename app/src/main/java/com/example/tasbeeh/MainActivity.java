@@ -1,12 +1,16 @@
 package com.example.tasbeeh;
-
+import android.os.Bundle;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_UPDATE = 123;
     private boolean isUpdateMode = false;
     private int selectedItemPosition = -1; // Initialize as -1
+    private boolean isVibrationEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
         counterTextView = findViewById(R.id.counterTextView);
         Button incrementButton = findViewById(R.id.incrementButton);
-        Button resetButton = findViewById(R.id.resetButton);
+        ImageView resetButton = findViewById(R.id.resetButton);
         saveButton = findViewById(R.id.saveButton);
         Button savedCountsButton = findViewById(R.id.savedDhikrButton);
+        ImageView vibrationButton = findViewById(R.id.vibrationButton);
 
         sharedPreferencesUtils = new SharedPreferencesUtils(getSharedPreferences("TasbeehAppPrefs", MODE_PRIVATE));
         tasbeehItemList = sharedPreferencesUtils.getSavedTasbeehItems();
@@ -65,11 +71,33 @@ public class MainActivity extends AppCompatActivity {
             updateCounterTextView();
         }
 
+        vibrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the vibration state
+                isVibrationEnabled = !isVibrationEnabled;
+                if (isVibrationEnabled) {
+                    // You can start vibrating here when it's enabled
+                    startVibration();
+                    showToast("Vibration is ON");
+                } else {
+                    // You can stop vibrating here when it's disabled
+                    stopVibration();
+                    showToast("Vibration is OFF");
+                }
+            }
+        });
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 incrementCount();
+
+
+                if (isVibrationEnabled) {
+                    // Vibrate here when it's enabled
+                    startVibration();
+                }
             }
         });
 
@@ -193,6 +221,25 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, SavedCountsActivity.class);
         startActivity(intent);
     }
+
+    private void startVibration() {
+        // Check if vibration is supported (you should also request permission if needed)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(200);
+        }
+    }
+
+    private void stopVibration() {
+        // Stop the vibration
+        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).cancel();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 
 
 
