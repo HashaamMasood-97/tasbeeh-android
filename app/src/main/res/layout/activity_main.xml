@@ -55,11 +55,10 @@
     />
 
     <Button
-        android:id="@+id/silverButtonSmall"
+        android:id="@+id/resetButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="20sp"
-        android:background="@drawable/inc_round_button"
+        android:background="@drawable/roundedbuttonsmall"
         app:backgroundTint="@null"
         android:text="+"
         app:layout_constraintTop_toTopOf="@id/vectorImage"
@@ -67,11 +66,11 @@
         app:layout_constraintEnd_toEndOf="@id/vectorImage"
         app:layout_constraintBottom_toBottomOf="@id/vectorImage"
         app:layout_constraintVertical_bias="0.48"
-        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintHorizontal_bias="0.71"
         />
 
     <Button
-        android:id="@+id/silverButton"
+        android:id="@+id/incrementButton"
         android:layout_width="92dp"
         android:layout_height="92dp"
         android:background="@drawable/inc_round_button"
@@ -99,36 +98,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.5">
 
-        <!-- Container for Increment and Reset buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <!-- Increment button (rounded) -->
-            <Button
-                android:id="@+id/incrementButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+"
-                android:textSize="14sp"
-                android:background="@drawable/rounded_button"
-                />
-
-            <!-- Reset button (rounded) -->
-            <Button
-                android:id="@+id/resetButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Reset"
-                android:textSize="14sp"
-                android:background="@drawable/rounded_button"
-                android:layout_marginStart="16dp"
-                />
-        </LinearLayout>
 
         <!-- Gap between buttons -->
         <Space

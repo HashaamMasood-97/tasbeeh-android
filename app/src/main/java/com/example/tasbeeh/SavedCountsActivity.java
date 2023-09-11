@@ -30,6 +30,8 @@ public class SavedCountsActivity extends AppCompatActivity {
     private SavedTasbeehAdapter adapter;
     private List<TasbeehItem> savedTasbeehItems;
     private SharedPreferencesUtils sharedPreferencesUtils;
+    private TextView emptyTextView;
+
 
     // Inside SavedCountsActivity
 
@@ -40,6 +42,9 @@ public class SavedCountsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        emptyTextView = findViewById(R.id.emptyTextView);
+
 
         // Enable the back button
         ActionBar actionBar = getSupportActionBar();
@@ -63,6 +68,12 @@ public class SavedCountsActivity extends AppCompatActivity {
 
         adapter = new SavedTasbeehAdapter(savedTasbeehItems);
         recyclerView.setAdapter(adapter);
+
+        if (savedTasbeehItems.isEmpty()) {
+            emptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            emptyTextView.setVisibility(View.GONE);
+        }
 
         adapter.setOnItemClickListener(new SavedTasbeehAdapter.OnItemClickListener() {
             @Override
@@ -134,6 +145,7 @@ public class SavedCountsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+
         }
 
         @Override
@@ -228,6 +240,12 @@ public class SavedCountsActivity extends AppCompatActivity {
             // Update your SharedPreferencesUtils to save the updated list
             sharedPreferencesUtils.saveTasbeehItems(savedTasbeehItems);
             adapter.notifyDataSetChanged();
+
+            if (savedTasbeehItems.isEmpty()) {
+                emptyTextView.setVisibility(View.VISIBLE);
+            } else {
+                emptyTextView.setVisibility(View.GONE);
+            }
 
         }
     }

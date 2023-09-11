@@ -3,6 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/emptyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="No tasbeeh record, list is empty!!"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="20sp"
+         />
+
     <!-- Use a FrameLayout as the root to avoid the AppBarLayout's default content inset -->
     <FrameLayout
         android:layout_width="match_parent"

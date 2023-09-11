@@ -1,40 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="@drawable/list_item_selector"
     android:padding="8dp">
 
-    <!-- Tasbeeh name -->
-    <TextView
-        android:id="@+id/savedNameTextView"
-        android:layout_width="match_parent"
+    <!-- Left-side vertical layout for name and timestamp -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tasbeeh Name"
-        android:textStyle="bold"
-        android:textSize="18sp" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <!-- Tasbeeh count -->
-    <TextView
-        android:id="@+id/savedCountTextView"
-        android:layout_width="match_parent"
+        <!-- Tasbeeh name -->
+        <TextView
+            android:id="@+id/savedNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tasbeeh Name"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/savedTimestampTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timestamp: 01-01-2023 12:00:00"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <!-- Green circle with count -->
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Count: 0"
-        android:textSize="16sp" />
+        android:layout_marginRight="20dp">
 
-    <!-- Timestamp -->
-    <TextView
-        android:id="@+id/savedTimestampTextView"
-        android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/greenround"
+        android:layout_gravity="center"/>
+
+        <!-- Tasbeeh count -->
+        <TextView
+            android:id="@+id/savedCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <!-- Icon of three bars -->
+    <ImageView
+        android:id="@+id/barIconImageView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Timestamp: 01-01-2023 12:00:00"
-        android:textSize="14sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray" />
-
+        android:src="@drawable/bar"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>
