@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             updateCounterTextView();
 
             // Change the "Save" button text to "Update"
-            saveButton.setText("Update");
+            saveButton.setText("Save Again");
 
             // Set a flag to indicate "Update" mode
             isUpdateMode = true;
@@ -104,7 +104,10 @@ public class MainActivity extends AppCompatActivity {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetCount();
+                if (currentCount != 0) {
+
+                    showResetConfirmationDialog();
+                }
             }
         });
 
@@ -115,7 +118,13 @@ public class MainActivity extends AppCompatActivity {
                     // Update the count and timestamp of the selected item
                     updateSelectedItem();
                 } else {
-                    showSaveDialog();
+                    if (currentCount==0){
+                        showToast("Can't Save,The Count is 0");
+                    }
+                    else{
+                        showSaveDialog();
+                    }
+
                 }
             }
 
@@ -148,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
         saveButton.setText("Save");
     }
 
+
+
     private void updateCounterTextView() {
         counterTextView.setText(String.valueOf(currentCount));
     }
@@ -166,7 +177,32 @@ public class MainActivity extends AppCompatActivity {
 
             // Optionally, update the counter display
             updateCounterTextView();
+            showToast("The latest count has been updated");
         }
+    }
+
+    private void showResetConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Reset Confirmation");
+        builder.setMessage("Are you sure you want to reset the count?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                resetCount();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -174,23 +210,15 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Save Tasbeeh Name");
 
-        final EditText input = new EditText(this);
-        builder.setView(input);
+        // Inflate the custom layout for the dialog
+        View dialogView = getLayoutInflater().inflate(R.layout.save_dialog_layout, null);
+        builder.setView(dialogView);
 
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String name = input.getText().toString();
-                if (!name.isEmpty()) {
-                    saveTasbeeh(name);
-                }
+        final EditText input = dialogView.findViewById(R.id.saveEditText);
+        final TextView errorTextView = dialogView.findViewById(R.id.errorTextView);
 
-                navigateToSavedCountsActivity();
+        builder.setPositiveButton("Save", null); // Set a placeholder onClickListener
 
-                // Clear the state of the counter (optional)
-                resetCount();
-            }
-        });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -198,8 +226,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        // Override the positive button's onClickListener to handle the input validation
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button saveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                saveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String name = input.getText().toString();
+                        if (!name.isEmpty()) {
+                            saveTasbeeh(name);
+                            navigateToSavedCountsActivity();
+                            resetCount();
+                            dialog.dismiss();
+                        } else {
+                            // Show the error message
+                            errorTextView.setVisibility(View.VISIBLE);
+                            errorTextView.setText("Please enter a name before saving.");
+                        }
+                    }
+                });
+            }
+        });
+
+        dialog.show();
     }
+
 
     private void saveTasbeeh(String name) {
         long timestamp = System.currentTimeMillis();
@@ -261,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK) {
             // Update the "Save" button text to "Update"
-            saveButton.setText("Update");
+            saveButton.setText("Save Again");
         }
     }
 
