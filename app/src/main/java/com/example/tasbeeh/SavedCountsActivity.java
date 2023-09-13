@@ -57,6 +57,8 @@ public class SavedCountsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+
+
         recyclerView = findViewById(R.id.savedCountsRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -69,6 +71,7 @@ public class SavedCountsActivity extends AppCompatActivity {
         if (savedTasbeehItems == null) {
             savedTasbeehItems = new ArrayList<>(); // Initialize as an empty list if null
         }
+
 
 
         adapter = new SavedTasbeehAdapter(savedTasbeehItems);
@@ -142,20 +145,33 @@ public class SavedCountsActivity extends AppCompatActivity {
 
                 holder.nameTextView.setText(tasbeehItem.getName());
                 holder.countTextView.setText(String.valueOf(tasbeehItem.getCount()));
+                Boolean isUpdateMode = tasbeehItem.getUpdateMode();
+
+                if (isUpdateMode != null && isUpdateMode) {
+                    // When isUpdateMode is true, set the icon to a play icon
+                    holder.barIconImageView.setImageResource(R.drawable.baseline_play_arrow_24);
+                    holder.barIconImageView.setClickable(false); // Make it non-clickable
+                    holder.barIconImageView.setOnClickListener(null);
+                } else {
+                    // When isUpdateMode is false, set the icon to a bar icon
+                    holder.barIconImageView.setImageResource(R.drawable.bar);
+                    holder.barIconImageView.setClickable(true); // Make it clickable
+                    holder.barIconImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onItemClickListener != null) {
+                                onItemClickListener.onBarIconClick(position);
+                            }
+                        }
+                    });
+                }
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
                 String formattedDate = sdf.format(new Date(tasbeehItem.getTimestamp()));
                 holder.timestampTextView.setText(formattedDate);
             }
 
-            holder.barIconImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onBarIconClick(position);
-                    }
-                }
-            });
+
 
 
 
@@ -276,11 +292,29 @@ public class SavedCountsActivity extends AppCompatActivity {
     private void continueSelectedItem(final int position) {
         int selectedCount = savedTasbeehItems.get(position).getCount();
 
+
+        savedTasbeehItems.get(position).setUpdateMode(true);
+
+        for (int i = 0; i < savedTasbeehItems.size(); i++) {
+            if (i != position) {
+                savedTasbeehItems.get(i).setUpdateMode(false);
+            }
+        }
+
+        // Save the updated list to SharedPreferences
+        sharedPreferencesUtils.saveTasbeehItems(savedTasbeehItems);
+
+        // Notify the adapter to update the item's icon
+        adapter.notifyItemChanged(position);
+
+        boolean isupdate = savedTasbeehItems.get(position).getUpdateMode();
+
         // Create an intent to navigate to MainActivity and pass the count and selected item position
         Intent intent = new Intent(SavedCountsActivity.this, MainActivity.class);
         intent.putExtra("action", "continue");
         intent.putExtra("count", selectedCount);
         intent.putExtra("position", position); // Pass the selected item position
+        intent.putExtra("isupdate",isupdate);
         startActivity(intent);
     }
 

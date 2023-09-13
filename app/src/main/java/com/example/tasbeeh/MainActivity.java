@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private int selectedItemPosition = -1; // Initialize as -1
     private boolean isVibrationEnabled = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +43,13 @@ public class MainActivity extends AppCompatActivity {
         Button savedCountsButton = findViewById(R.id.savedDhikrButton);
         ImageView vibrationButton = findViewById(R.id.vibrationButton);
 
+
         sharedPreferencesUtils = new SharedPreferencesUtils(getSharedPreferences("TasbeehAppPrefs", MODE_PRIVATE));
         tasbeehItemList = sharedPreferencesUtils.getSavedTasbeehItems();
+
+
+
+
 
         if (tasbeehItemList == null) {
             tasbeehItemList = new ArrayList<>();
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Get the selected item position from the intent
             selectedItemPosition = intent.getIntExtra("position", -1);
+            boolean isupdate=intent.getBooleanExtra("isupdate",false);
 
             // Update the counter with the selected count
             currentCount = selectedCount;
@@ -64,12 +72,24 @@ public class MainActivity extends AppCompatActivity {
             saveButton.setText("Save Again");
 
             // Set a flag to indicate "Update" mode
-            isUpdateMode = true;
+            isUpdateMode = isupdate;
         }
         else{
             currentCount = sharedPreferencesUtils.getCurrentCount();
             updateCounterTextView();
+            selectedItemPosition= sharedPreferencesUtils.getSelectedItemPosition();
+            isUpdateMode=sharedPreferencesUtils.getIsUpdateMode();
+
+
+            if(isUpdateMode){
+                saveButton.setText("Save Again");
+            }
+            else{
+                saveButton.setText("Save");
+            }
+
         }
+
 
         vibrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentCount != 0) {
 
                     showResetConfirmationDialog();
+
                 }
             }
         });
@@ -148,6 +169,13 @@ public class MainActivity extends AppCompatActivity {
         currentCount = 0;
         updateCounterTextView();
 
+        // Reset isUpdateMode to false for all items in the list
+        for (TasbeehItem item : tasbeehItemList) {
+            item.setUpdateMode(false);
+        }
+
+        // Save the updated list to SharedPreferences
+        sharedPreferencesUtils.saveTasbeehItems(tasbeehItemList);
 
         // Reset the flag and selected item position
         isUpdateMode = false;
@@ -156,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         // Change the "Save" button text back to "Save"
         saveButton.setText("Save");
     }
+
 
 
 
@@ -204,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 
 
     private void showSaveDialog() {
@@ -318,6 +348,16 @@ public class MainActivity extends AppCompatActivity {
             // Update the "Save" button text to "Update"
             saveButton.setText("Save Again");
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Save the currentCount, selectedItemPosition, and isUpdateMode to SharedPreferences
+        sharedPreferencesUtils.setCurrentCount(currentCount);
+        sharedPreferencesUtils.setSelectedItemPosition(selectedItemPosition);
+        sharedPreferencesUtils.setIsUpdateMode(isUpdateMode);
     }
 
 
