@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ public class SavedCountsActivity extends AppCompatActivity {
     private List<TasbeehItem> savedTasbeehItems;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private TextView emptyTextView;
+
+
 
 
     // Inside SavedCountsActivity
@@ -85,7 +88,8 @@ public class SavedCountsActivity extends AppCompatActivity {
             @Override
             public void onBarIconClick(int position) {
                 // Handle the bar icon click here, e.g., show a dialog or perform any desired action
-                showDeleteConfirmationDialog(position);
+                View clickedView = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+                showPopupMenu(position, clickedView);
             }
         });
     }
@@ -206,32 +210,28 @@ public class SavedCountsActivity extends AppCompatActivity {
 
 
 
-    private void showDeleteConfirmationDialog(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Choose an action:")
-                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Inside the OnClickListener for the "Continue" button
-                        continueSelectedItem(position);
-                    }
-                })
-                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        showSecondDeleteConfirmationDialog(position);
-                    }
-                })
-                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // After choosing "Delete," show the second dialog
+    private void showPopupMenu(final int position, View anchorView) {
+        PopupMenu popupMenu = new PopupMenu(this, anchorView, Gravity.END); // Show the popup menu anchored to the toolbar
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
 
-                    }
-                })
-                .create()
-                .show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.menu_delete) {
+                    showSecondDeleteConfirmationDialog(position);
+                    return true;
+                } else if (item.getItemId() == R.id.menu_continue) {
+                    continueSelectedItem(position);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
     }
+
+
 
     private void showSecondDeleteConfirmationDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
