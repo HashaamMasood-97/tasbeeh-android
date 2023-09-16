@@ -291,6 +291,7 @@ public class SavedCountsActivity extends AppCompatActivity {
     }
     private void continueSelectedItem(final int position) {
         int selectedCount = savedTasbeehItems.get(position).getCount();
+        String name=savedTasbeehItems.get(position).getName();
 
 
         savedTasbeehItems.get(position).setUpdateMode(true);
@@ -315,6 +316,7 @@ public class SavedCountsActivity extends AppCompatActivity {
         intent.putExtra("count", selectedCount);
         intent.putExtra("position", position); // Pass the selected item position
         intent.putExtra("isupdate",isupdate);
+        intent.putExtra("name",name);
         startActivity(intent);
     }
 

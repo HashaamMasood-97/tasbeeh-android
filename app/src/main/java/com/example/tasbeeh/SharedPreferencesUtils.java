@@ -12,6 +12,9 @@ public class SharedPreferencesUtils {
     private static final String SELECTED_ITEM_POSITION_KEY = "selected_item_position";
     private static final String IS_UPDATE_MODE_KEY = "is_update_mode";
 
+    private static final String SELECTED_ITEM_NAME_KEY = "selected_item_name";
+
+
 
     private SharedPreferences sharedPreferences;
     private Gson gson = new Gson();
@@ -66,6 +69,15 @@ public class SharedPreferencesUtils {
 
     public void setIsUpdateMode(boolean isUpdateMode) {
         sharedPreferences.edit().putBoolean(IS_UPDATE_MODE_KEY, isUpdateMode).apply();
+    }
+
+    public void setSelectedItemName(String name) {
+        sharedPreferences.edit().putString(SELECTED_ITEM_NAME_KEY, name).apply();
+    }
+
+    // Method to retrieve the name of the selected item
+    public String getSelectedItemName() {
+        return sharedPreferences.getString(SELECTED_ITEM_NAME_KEY, "");
     }
 
 

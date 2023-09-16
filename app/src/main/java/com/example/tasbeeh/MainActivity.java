@@ -1,6 +1,7 @@
 package com.example.tasbeeh;
 import android.os.Bundle;
 import android.os.Build;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isUpdateMode = false;
     private int selectedItemPosition = -1; // Initialize as -1
     private boolean isVibrationEnabled = false;
+
+    private String currentname="";
 
 
 
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             // Get the selected item position from the intent
             selectedItemPosition = intent.getIntExtra("position", -1);
             boolean isupdate=intent.getBooleanExtra("isupdate",false);
+            currentname=intent.getStringExtra("name");
 
             // Update the counter with the selected count
             currentCount = selectedCount;
@@ -79,10 +83,23 @@ public class MainActivity extends AppCompatActivity {
             updateCounterTextView();
             selectedItemPosition= sharedPreferencesUtils.getSelectedItemPosition();
             isUpdateMode=sharedPreferencesUtils.getIsUpdateMode();
+            currentname=sharedPreferencesUtils.getSelectedItemName();
+
 
 
             if(isUpdateMode){
                 saveButton.setText("Save Again");
+                final TextView messageTextView = findViewById(R.id.messageTextView);
+                messageTextView.setVisibility(View.VISIBLE);
+                messageTextView.setText("Continue "+currentname+"!!");
+
+                // Set a delayed task to hide the message after 5 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageTextView.setVisibility(View.GONE);
+                    }
+                }, 8000);
             }
             else{
                 saveButton.setText("Save");
@@ -358,7 +375,15 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferencesUtils.setCurrentCount(currentCount);
         sharedPreferencesUtils.setSelectedItemPosition(selectedItemPosition);
         sharedPreferencesUtils.setIsUpdateMode(isUpdateMode);
+        sharedPreferencesUtils.setSelectedItemName(currentname);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity(); // Close all activities in the app's task stack and exit the app
+    }
+
 
 
 }

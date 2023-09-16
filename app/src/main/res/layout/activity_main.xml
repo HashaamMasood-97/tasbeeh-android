@@ -36,6 +36,24 @@
         app:layout_constraintDimensionRatio="1:1"
         />
 
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your message goes here"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/vectorImage"
+        app:layout_constraintStart_toStartOf="@id/vectorImage"
+        app:layout_constraintEnd_toEndOf="@id/vectorImage"
+        app:layout_constraintBottom_toTopOf="@id/counterTextView"
+        app:layout_constraintVertical_bias="0.99"
+        />
+
     <!-- Counter display TextView -->
     <TextView
         android:id="@+id/counterTextView"
