@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#116f3a"
-    >
+    android:background="@color/dark_green">
 
     <!-- Heading -->
     <TextView
@@ -18,8 +17,8 @@
         android:textSize="34sp"
         android:textStyle="bold|italic"
         android:gravity="center"
+        android:paddingTop="10dp"
         android:textColor="#ffffff"
-        android:paddingTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,12 +30,13 @@
         android:id="@+id/vectorImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/splash"
+        android:src="@drawable/ac1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headingTextView"
         app:layout_constraintBottom_toTopOf="@id/buttonContainer"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headingTextView" />
+        />
 
 
 
@@ -58,5 +58,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="25dp" />
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

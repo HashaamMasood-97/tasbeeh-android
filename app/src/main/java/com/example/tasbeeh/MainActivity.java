@@ -376,6 +376,12 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferencesUtils.setSelectedItemPosition(selectedItemPosition);
         sharedPreferencesUtils.setIsUpdateMode(isUpdateMode);
         sharedPreferencesUtils.setSelectedItemName(currentname);
+
+        if (currentCount != 0) {
+            Intent serviceIntent = new Intent(this, NotificationService.class);
+            serviceIntent.putExtra("currentCount", currentCount);
+            startService(serviceIntent);
+        }
     }
 
     @Override

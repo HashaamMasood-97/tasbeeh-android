@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DISPLAY_DURATION = 2000; // 4 seconds
+    private static final int SPLASH_DISPLAY_DURATION = 1500; // 4 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
