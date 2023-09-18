@@ -53,7 +53,7 @@ public class NotificationService extends Service {
                     public void run() {
                         showNotification(count);
                     }
-                }, 4*60*60*1000); // 4 hours in milliseconds
+                }, 2*60*60*1000); // 2 hours in milliseconds
             }
         }, 5000); // 5 seconds in milliseconds
     }

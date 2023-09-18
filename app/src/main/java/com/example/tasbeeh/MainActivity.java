@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         messageTextView.setVisibility(View.GONE);
                     }
-                }, 8000);
+                }, 5000);
             }
             else{
                 saveButton.setText("Save");
