@@ -39,6 +39,9 @@
         <service
             android:name=".NotificationService"
             android:exported="false" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2311717365450383~1041697546"/>
     </application>
 
 </manifest>
