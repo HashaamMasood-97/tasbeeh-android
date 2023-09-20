@@ -7,7 +7,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.tasbeeh"
+        applicationId = "com.digitaltasbeehcounter"
         minSdk = 23
         targetSdk = 33
         versionCode = 1
