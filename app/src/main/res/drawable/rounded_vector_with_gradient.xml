@@ -4,14 +4,14 @@
         <shape android:shape="oval">
             <solid android:color="@android:color/transparent" />
             <stroke
-                android:width="10dp"
+                android:width="12dp"
                 android:color="#000000"
                 />
         </shape>
     </item>
 
     <!-- Background with gradient -->
-    <item android:right="8dp" android:left="8dp" android:top="8dp" android:bottom="8dp">
+    <item android:right="9dp" android:left="9dp" android:top="9dp" android:bottom="9dp">
         <shape
             android:shape="oval">
             <gradient
