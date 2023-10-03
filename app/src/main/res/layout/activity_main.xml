@@ -46,17 +46,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your message goes here"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:gravity="center"
         android:textColor="#ffffff"
         android:layout_gravity="center_horizontal"
         android:visibility="gone"
         android:background="@android:color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/vectorImage"
+        app:layout_constraintTop_toTopOf="@id/vectorImage"
         app:layout_constraintStart_toStartOf="@id/vectorImage"
         app:layout_constraintEnd_toEndOf="@id/vectorImage"
-        app:layout_constraintBottom_toTopOf="@id/counterTextView"
-        app:layout_constraintVertical_bias="0.99"
+        app:layout_constraintBottom_toBottomOf="@id/vectorImage"
+        app:layout_constraintVertical_bias="0.12"
         />
 
     <!-- Counter display TextView -->
@@ -106,8 +106,8 @@
 
     <Button
         android:id="@+id/incrementButton"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
+        android:layout_width="97dp"
+        android:layout_height="97dp"
         android:background="@drawable/inc_round_button"
         app:backgroundTint="@null"
         android:text="+"

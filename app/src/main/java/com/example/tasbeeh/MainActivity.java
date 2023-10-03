@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 saveButton.setText("Save Again");
                 final TextView messageTextView = findViewById(R.id.messageTextView);
                 messageTextView.setVisibility(View.VISIBLE);
-                messageTextView.setText("Continue "+currentname+"!!");
+                messageTextView.setText("Continue "+currentname+" !");
 
                 // Set a delayed task to hide the message after 5 seconds
                 new Handler().postDelayed(new Runnable() {
