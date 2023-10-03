@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="50sp"
+        android:textSize="35sp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/transparent"
@@ -73,7 +73,7 @@
         app:layout_constraintStart_toStartOf="@id/vectorImage"
         app:layout_constraintEnd_toEndOf="@id/vectorImage"
         app:layout_constraintBottom_toBottomOf="@id/vectorImage"
-        app:layout_constraintVertical_bias="0.23"
+        app:layout_constraintVertical_bias="0.25"
         app:layout_constraintHorizontal_bias="0.5"
     />
 
@@ -96,11 +96,11 @@
         android:layout_height="52dp"
         android:src="@drawable/rounded_vector_with_gradient"
         app:layout_constraintTop_toTopOf="@id/vectorImage"
-        app:layout_constraintStart_toEndOf="@id/resetButton"
-        app:layout_constraintEnd_toStartOf="@id/incrementButton"
+        app:layout_constraintStart_toStartOf="@id/vectorImage"
+        app:layout_constraintEnd_toEndOf="@id/vectorImage"
         app:layout_constraintBottom_toBottomOf="@id/vectorImage"
         app:layout_constraintVertical_bias="0.47"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.28"
         />
 
 
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Save"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:background="@drawable/rounded_button"
                 />
 
@@ -161,9 +161,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Tasbeeh List"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:background="@drawable/rounded_button"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 />
         </LinearLayout>
     </LinearLayout>
